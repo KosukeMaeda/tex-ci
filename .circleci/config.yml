@@ -1,0 +1,21 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: paperist/alpine-texlive-ja
+    working_directory: project
+    steps:
+      - run: apk add --no-cache ca-certificates
+      - checkout
+      - run:
+          name: compile
+          command: |
+            extractbb figures/*.png;
+            platex main.tex;
+            pbibtex main;
+            platex main.tex;
+            platex main.tex;
+            dvipdfmx main;
+
+      - store_artifacts:
+          path: main.pdf
