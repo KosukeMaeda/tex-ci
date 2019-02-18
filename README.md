@@ -7,8 +7,11 @@
 # tex-CI
 circleCIを使って自動的にtexファイルをコンパイルする
 
-[![CircleCI](https://circleci.com/gh/KosukeMaeda/tex-ci.svg?style=svg)](https://circleci.com/api/v1.1/project/github/KosukeMaeda/tex-ci/latest/artifacts/0/roject/main.pdf)
-←ここからコンパイルしたpdfファイルをひらける
+[![CircleCI](https://circleci.com/gh/KosukeMaeda/tex-ci.svg?style=svg)](https://circleci.com/gh/KosukeMaeda/tex-ci)
+←ここがPASSEDならコンパイルできてるよ
+
+コンパイルができていたら
+[ここ](https://circleci.com/api/v1.1/project/github/:username/:project/latest/artifacts/0/roject/main.pdf)からコンパイル済みPDFをダウンロードできる。
 
 ## Motivation
 - texのコンパイルを自動的に行う
@@ -25,10 +28,7 @@ circleCIを使って自動的にtexファイルをコンパイルする
 ### 3.circleCIにプロジェクトを追加する
 .circleは [.circle](https://github.com/KosukeMaeda/tex-ci/tree/master/.circleci)を参考に
 
-### 4.READMEを編集してバッチのurlを変更する
-1. [ここ](https://circleci.com/docs/2.0/status-badges/)を参考にしてバッチを作る
-2. バッチのリンク先をコンパイル済みpdfへのリンクにする
-
+### 4.circleCIのstatus Badgeと、pdfへのリンクを変更する。
 pdfへのリンクはこんな感じ
 ```
 https://circleci.com/api/v1.1/project/github/:username/:project/latest/artifacts/0/roject/main.pdf
@@ -41,3 +41,7 @@ https://circleci.com/api/v1.1/project/github/:username/:project/latest/artifacts
 特にプライベートリポジトリだとtokenが必要となるので注意
 
 ### 5.masterブランチにpushするとコンパイルされる
+
+
+## tips
+ - Slackと連携するとビルドの結果を通知してくれる
