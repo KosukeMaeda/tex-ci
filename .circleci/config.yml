@@ -60,9 +60,8 @@ jobs:
           keys:
             - pdf-{{ .Revision }}
 
-      - run:
-          - store_artifacts:
-              path: main.pdf
+      - store_artifacts:
+          path: main.pdf
 
 
 
