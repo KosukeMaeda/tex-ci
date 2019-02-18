@@ -3,19 +3,78 @@ jobs:
   build:
     docker:
       - image: paperist/alpine-texlive-ja
-    working_directory: project
+    working_directory: /home/circleci/repo
     steps:
-      - run: apk add --no-cache ca-certificates
+      - run:
+          name: setup
+          command: apk add --update --no-cache ca-certificates
+      
       - checkout
+
       - run:
           name: compile
           command: |
-            extractbb figures/*.png;
             platex main.tex;
             pbibtex main;
             platex main.tex;
             platex main.tex;
             dvipdfmx main;
 
-      - store_artifacts:
-          path: main.pdf
+      - save_cache:
+          key: pdf-{{ .Revision }}
+          paths:
+            - main.pdf
+
+
+  test:
+    docker:
+      - image: circleci/python:3.6.4
+    working_directory: ~/repo
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - pdf-{{ .Revision }}
+
+      - run:
+          name: install packages
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r .test/requirements.txt
+      
+      - run:
+          name: run tests
+          command: |
+            . venv/bin/activate 
+            python .test/run.py main.pdf
+
+
+  release:
+    docker:
+      - image: circleci/python:3.6.4  # 正直なんでもよい
+    working_directory: ~/repo
+    steps:
+      - restore_cache:
+          keys:
+            - pdf-{{ .Revision }}
+
+      - run:
+          - store_artifacts:
+              path: main.pdf
+
+
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - release:
+          requires:
+            - build
+            - test
