@@ -11,7 +11,7 @@ circleCIを使って自動的にtexファイルをコンパイルする
 ←ここがPASSEDならコンパイルできてるよ
 
 コンパイルができていたら
-[ここ](https://circleci.com/api/v1.1/project/github/:username/:project/latest/artifacts/0/roject/main.pdf)からコンパイル済みPDFをダウンロードできる。
+[ここ](https://circleci.com/api/v1.1/project/github/KosukeMaeda/tex-ci/latest/artifacts/0/home/circleci/repo/main.pdf)からコンパイル済みPDFをダウンロードできる。
 
 ## Motivation
 - texのコンパイルを自動的に行う
